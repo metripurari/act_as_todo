@@ -4,6 +4,10 @@ To create the table for todo table structure We have to run
 
 rake acts_as_todo:create
 
+to rollback
+
+rake acts_as_todo:roll_back
+
 
 ruby-1.8.7-p334 :005 >   User.create(:name => "Tripurari")
  => #<User id: 2, name: "Tripurari", created_at: "2011-06-02 11:22:46", updated_at: "2011-06-02 11:22:46"> 
@@ -16,4 +20,15 @@ ruby-1.8.7-p334 :002 > Todo.first.work
  => #<Lesson id: 1, name: "aaa", created_at: "2011-06-02 08:52:46", updated_at: "2011-06-02 08:52:46"> 
 ruby-1.8.7-p334 :003 > Lesson.first.todos
  => [#<Todo id: 1, user_id: 1, work_id: 1, work_type: "Lesson", started_at: nil, end_at: nil, created_at: "2011-06-02 11:17:25", updated_at: "2011-06-02 11:17:25">] 
-ruby-1.8.7-p334 :004 > 
+ruby-1.8.7-p334 :001 > ruby-1.8.7-p334 :001 > User.first.todos
+ => [#<Todo id: 1, user_id: 1, work_id: 1, work_type: "Lesson", started_at: nil, end_at: nil, created_at: "2011-06-02 11:17:25", updated_at: "2011-06-02 11:17:25">, #<Todo id: 2, user_id: 1, work_id: 1, work_type: "Lesson", started_at: nil, end_at: nil, created_at: "2011-06-02 11:23:30", updated_at: "2011-06-02 11:23:30">] 
+ruby-1.8.7-p334 :003 > User.first.todos.collect(&:work)
+ => [#<Lesson id: 1, name: "aaa", created_at: "2011-06-02 08:52:46", updated_at: "2011-06-02 08:52:46">, #<Lesson id: 1, name: "aaa", created_at: "2011-06-02 08:52:46", updated_at: "2011-06-02 08:52:46">]
+ 
+
+
+add 
+
+aatd : to the model has to be done as to do 
+
+work_to_do : add to the model who is responsible to work on to do
