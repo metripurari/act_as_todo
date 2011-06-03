@@ -1,7 +1,8 @@
 class ActsAsTodoMigration < ActiveRecord::Migration
   def self.up    
     create_table :todos do |t|
-    	t.integer :ref_id
+    	t.integer :worker_id
+    	t.string :worker_type
       t.integer :work_id
       t.string :work_type
       t.datetime :started_at
