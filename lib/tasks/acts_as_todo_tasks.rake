@@ -1,4 +1,4 @@
-require File.expand_path('../../generators/acts_as_todo_migration/templates/migration.rb', __FILE__)
+require File.expand_path('../../../generators/acts_as_todo_migration/templates/migration.rb', __FILE__)
 require 'rake'
 namespace :acts_as_todo do
   desc "Create the Schema for todo table"

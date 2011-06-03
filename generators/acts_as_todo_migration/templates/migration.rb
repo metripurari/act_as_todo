@@ -1,17 +1,25 @@
 class ActsAsTodoMigration < ActiveRecord::Migration
-  def self.up    
-    create_table :todos do |t|
-    	t.integer :worker_id
-    	t.string :worker_type
-      t.integer :work_id
-      t.string :work_type
-      t.datetime :started_at
-      t.datetime :end_at
-      t.timestamps
+  def self.up
+    unless table_exists?("todos")    
+      create_table :todos do |t|
+      	t.integer :worker_id
+      	t.string :worker_type
+        t.integer :work_id
+        t.string :work_type
+        t.date :started_at
+        t.date :end_at
+        t.timestamps
+      end
+    else
+      puts "Migration Already run please check Table has been created"
     end
   end
   
   def self.down
-    drop_table :todos
+    unless table_exists?("todos")    
+      puts "Migration not run to create todos table in schema please check Table has not been created"
+    else
+      drop_table :todos
+    end
   end
 end

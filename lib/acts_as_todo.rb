@@ -19,12 +19,26 @@ module ActiveRecord
             
       module Work
         module InstanceMethods
+          def list_of_work
+            todos
+          end
+          
+          def todays_works
+            todos.where(:start_date => Date.today)
+          end
         end
  
       end # InstanceMethods
       
       module Worker
         module InstanceMethods
+          def work_to_do
+            todos
+          end
+          
+          def todays_works
+            todos.where(:start_date => Date.today)
+          end
         end
       end
     
