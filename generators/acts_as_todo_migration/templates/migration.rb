@@ -6,6 +6,7 @@ class ActsAsTodoMigration < ActiveRecord::Migration
       	t.string :worker_type
         t.integer :work_id
         t.string :work_type
+        t.integer :todo_id
         t.date :started_at
         t.date :end_at
         t.timestamps

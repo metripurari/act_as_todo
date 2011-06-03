@@ -23,8 +23,12 @@ module ActiveRecord
             todos
           end
           
-          def todays_works
-            todos.where(:start_date => Date.today)
+          def urgent_work
+            todos.where("end_at = '#{Date.today}'")
+          end
+          
+          def failed_work
+            todos.where("end_at < '#{Date.today}'")
           end
         end
  
@@ -36,8 +40,12 @@ module ActiveRecord
             todos
           end
           
-          def todays_works
-            todos.where(:start_date => Date.today)
+          def urgent_todos
+            todos.where("end_at = '#{Date.today}'")
+          end
+          
+          def failed_todo
+            todos.where("end_at < '#{Date.today}'")
           end
         end
       end
