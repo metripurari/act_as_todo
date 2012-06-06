@@ -1,6 +1,6 @@
 class Todo < ActiveRecord::Base
   
-  STATUS = ["urgent", "narmal", "low", "waiting"]
+  STATUS = ["urgent", "normal", "low", "waiting"]
   belongs_to :work, :polymorphic => true
   belongs_to :worker, :polymorphic => true
   has_many :sub_tasks
