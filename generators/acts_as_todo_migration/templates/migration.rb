@@ -9,6 +9,7 @@ class ActsAsTodoMigration < ActiveRecord::Migration
         t.integer :todo_id
         t.date :started_at
         t.date :end_at
+        t.boolean :completed, :default => false
         t.timestamps
       end
     else
