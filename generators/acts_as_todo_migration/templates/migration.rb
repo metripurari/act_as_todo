@@ -10,6 +10,7 @@ class ActsAsTodoMigration < ActiveRecord::Migration
         t.date :started_at
         t.date :end_at
         t.boolean :completed, :default => false
+        t.string :status, :default => :new
         t.timestamps
       end
     else
