@@ -5,5 +5,4 @@ class TodoState
             :complete => [:restart],
             :onhold => [:start, :complete],
             :restart =>[:start]}
-  
 end

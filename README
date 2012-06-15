@@ -19,21 +19,53 @@ end
 
 This will show how the relation works
 
-ruby-1.8.7-p334 :001 > User.create(:name => 'tripurari')
+
+
+User.create(:name => 'tripurari')
  => #<User id: 1, name: "tripurari", created_at: "2011-06-03 04:49:31", updated_at: "2011-06-03 04:49:31"> 
-ruby-1.8.7-p334 :002 > Lesson.create(:name => "should be done")
+Lesson.create(:name => "should be done")
  => #<Lesson id: 1, name: "should be done", created_at: "2011-06-03 04:50:04", updated_at: "2011-06-03 04:50:04"> 
-ruby-1.8.7-p334 :003 > Lesson.create(:name => "Should be done later")
+Lesson.create(:name => "Should be done later")
  => #<Lesson id: 2, name: "Should be done later", created_at: "2011-06-03 04:50:23", updated_at: "2011-06-03 04:50:23"> 
-ruby-1.8.7-p334 :004 > User.first.todos.create(:work => Lesson.first)
+User.first.todos.create(:work => Lesson.first)
  => #<Todo id: 1, worker_id: 1, worker_type: "User", work_id: 1, work_type: "Lesson", started_at: nil, end_at: nil, created_at: "2011-06-03 04:50:32", updated_at: "2011-06-03 04:50:32"> 
-ruby-1.8.7-p334 :005 > Lesson.last.todos.create(:worker => User.first)
+Lesson.last.todos.create(:worker => User.first)
  => #<Todo id: 2, worker_id: 1, worker_type: "User", work_id: 2, work_type: "Lesson", started_at: nil, end_at: nil, created_at: "2011-06-03 04:50:39", updated_at: "2011-06-03 04:50:39"> 
-ruby-1.8.7-p334 :006 > Todo.first.work
+Todo.first.work
  => #<Lesson id: 1, name: "should be done", created_at: "2011-06-03 04:50:04", updated_at: "2011-06-03 04:50:04"> 
-ruby-1.8.7-p334 :007 > Todo.first.worker
+Todo.first.worker
  => #<User id: 1, name: "tripurari", created_at: "2011-06-03 04:49:31", updated_at: "2011-06-03 04:49:31">
 
 
 
-ouyoyuioy
+Now We can change the states of a todo object
+
+The available states we can find through this command
+
+Todo.first.all_states will give
+
+ => {:new=>[:start, :onhold], :start=>[:complete, :onhold], :complete=>[:restart], :onhold=>[:start, :complete], :restart=>[:start]} 
+
+And all the states available for todo's are 
+
+Todo.first.available_states
+ => [:start, :complete] 
+
+Whether the state change is valid or not
+
+Todo.first.can_change_state?(:new)
+ => false 
+
+Change the status of todo
+
+Todo.first.start
+   (244.9ms)  BEGIN
+   (187.4ms)  UPDATE `todos` SET `status` = 'start', `updated_at` = '2012-06-15 11:07:39' WHERE `todos`.`id` = 1
+   (74.7ms)  COMMIT
+ => true
+
+When the state transition is not valid it will give an error
+
+Todo.first.restart
+ => ["State Cannot Changed from start to start. Available stated to change are [:complete, :onhold]"
+

@@ -24,6 +24,7 @@ class Todo < ActiveRecord::Base
         self.update_attributes(:status => meth, :completed => (meth == "complete"))
       else
         self.errors.add(:status, "State Cannot Changed from #{self.status} to #{meth}. Available stated to change are #{available_states}")
+        return false
       end
     else
       super
