@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/act_as_todo/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["tripurari"]
