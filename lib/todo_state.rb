@@ -1,13 +1,13 @@
 class TodoState
   attr_accessor :method, :todo
-  States = {:new => [],
-            :started => [:new, :onhold, :restarted],
-            :completed => [:onhold, :started],
-            :onhold => [:started, :new],
-            :restarted =>[:completed]}
+  States = {:new => [:start, :onhold],
+            :start => [:complete, :onhold],
+            :complete => [:restart],
+            :onhold => [:start, :complete],
+            :restart =>[:start]}
   
-  def can_change_state?
-    States[:method].include(todo.state)      
+  def self.hange_state?
+    States[:method].include?(todo.state)      
   end
   
 end

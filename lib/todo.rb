@@ -5,12 +5,12 @@ class Todo < ActiveRecord::Base
   belongs_to :worker, :polymorphic => true
   has_many :sub_tasks, :dependent => :destroy
   
-  default_scope :order => 'end_date ASC'
+  default_scope :order => 'started_at ASC'
   
-  scope :completed, :conditions => { :completed => true }, :order => 'end_date ASC'
-  scope :not_completed, :conditions => { :completed => true }, :order => 'start_date DESC'
+  scope :completed, :conditions => { :completed => true }, :order => 'started_at ASC'
+  scope :not_completed, :conditions => { :completed => true }, :order => 'started_at DESC'
   #option can have {:status => , :worker => , :work => , :end_date => , :start_date =>}
-  def reestimate(options = {:start_date => Date.today, :end_date => Date.today})
+  def reestimate(options = {:started_at => Date.today, :end_at => Date.today})
     update_attributes(options)
   end
   
@@ -19,11 +19,11 @@ class Todo < ActiveRecord::Base
   end
   
   def method_missing(meth, *args, &block)
-    if TodoState::States.keys.include(meth)
-      if TodoState.can_change_state(meth, self)
-        self.update_attribute(:state, meth)
+    if TodoState::States.keys.include?(meth)
+      if can_change_state?(meth)
+        self.update_attributes(:status => meth, :completed => (meth == "complete"))
       else
-        self.errors.add(:state, "State Cannot Changed from #{self.state} to #{meth}. Available stated to change are #{TodoState.States[self.state]}")
+        self.errors.add(:status, "State Cannot Changed from #{self.status} to #{meth}. Available stated to change are #{available_states}")
       end
     else
       super
@@ -35,7 +35,11 @@ class Todo < ActiveRecord::Base
   end
   
   def available_states
-    TodoState::States[self.state]
+    TodoState::States[self.status.to_sym]
+  end
+  
+  def can_change_state?(state_to_change)
+    available_states.include?(state_to_change.to_sym)      
   end
 end
 
