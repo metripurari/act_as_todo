@@ -6,8 +6,4 @@ class TodoState
             :onhold => [:start, :complete],
             :restart =>[:start]}
   
-  def self.hange_state?
-    States[:method].include?(todo.state)      
-  end
-  
 end
